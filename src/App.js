@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import Model from "./Model";
+import { OrbitControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { useState } from "react";
+import "./app.css";
 
 function App() {
+  const [explosionFactor, setExplosionFactor] = useState(0);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Canvas>
+        <ambientLight intensity={Math.PI} />
+        <directionalLight intensity={0.5} />
+        <OrbitControls panSpeed={3} rotateSpeed={3} />
+        <Model explosionFactor={explosionFactor}></Model>
+      </Canvas>
+      <input
+        style={{
+          position: "absolute",
+          width: "100px",
+          height: "100px",
+          top: 0,
+        }}
+        type="range"
+        step={1}
+        value={explosionFactor}
+        max={90}
+        onChange={(e) => {
+          setExplosionFactor(Number(e.target.value));
+        }}
+      />
+    </>
   );
 }
 
